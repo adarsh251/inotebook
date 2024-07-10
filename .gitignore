@@ -10,8 +10,8 @@ node_modules
 
 # production
 /build
-
 # misc
+/inotebook-backend
 .DS_Store
 .env.local
 .env.development.local

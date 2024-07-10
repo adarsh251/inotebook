@@ -1,11 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import NavBar from './components/NavBar'
 import "./App.css";
+import NoteState from './context/notes/noteState';
 import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
+  createBrowserRouter,
+  RouterProvider,
 } from "react-router-dom";
+import About from './components/About';
+import Notes from './components/Notes'
+import AddNote from './components/AddNote'
+import Login from './components/Login';
+import Signup from './components/Signup';
 function App() {
   const [theme,setTheme]=useState('light');
   const [bgColor,setBgColor]=useState('#DEE4EA');
@@ -24,18 +29,56 @@ function App() {
       document.body.style.backgroundColor="#DEE4EA";
     }
   }
+  useEffect(() => {
+    changeTheme();
+    // eslint-disable-next-line
+  }, []);
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      
+      element:<>
+      <Login />
+      </>,
+    },
+    {
+      path: "/signup",
+      
+      element:<>
+      <Signup />
+      </>,
+    },
+    {
+      path:"/Home",
+      element:
+      <>
+        <NavBar style={{theme,bgColor,bgColor1}} changeTheme={changeTheme}/>
+        <AddNote/>
+        <Notes/>
+      </>,
+    },
+    {
+      path:"/new",
+      element:
+      <>
+        <NavBar style={{theme,bgColor,bgColor1}} changeTheme={changeTheme}/>
+      </>,
+    },
+    {
+      path:"/About",    
+      element:
+      <>
+        <NavBar style={{theme,bgColor,bgColor1}} changeTheme={changeTheme}/>
+        <About/>
+      </>,
+    }
+  ]);
   return (
     <>
-    <Router>
-    <div className='app'>
-      <NavBar style={{theme,bgColor,bgColor1}} changeTheme={changeTheme}/>
-      <Routes>
-        <Route path="/" element={<></>}/>
-        <Route path="/Home" element={<h1>Home</h1>}/>
-        <Route path="/About" element={<h1>About</h1>}/>
-      </Routes>
-      </div>
-      </Router>
+    <NoteState>
+    
+    <RouterProvider router={router} />
+    </NoteState>
     </>
   )
 }

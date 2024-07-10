@@ -61,14 +61,13 @@ export default function NavBar(props) {
         .mode{
             width:36px;
             height: 36px;
-            background-color: ${props.style.bgColor1};
             border-radius: 18px;
-            border:1px solid #738496;
             margin-left: 20px;
             margin-right: 0px;
         }
         .mode svg{
             margin: 3px;
+            cursor: pointer
         }
     `}
       </style>
@@ -79,6 +78,7 @@ export default function NavBar(props) {
         <div className="nav-links">
           <Link to="/home">Home</Link>
           <Link to="/about">About</Link>
+          <Link to="/new">New</Link>
         </div>
         <div className="right">
           <input type="text" placeholder="Search..." />
@@ -87,15 +87,15 @@ export default function NavBar(props) {
             {props.style.theme === "light" ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="28"
-                height="28"
+                width="30"
+                height="30"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-sun"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-sun"
               >
                 <circle cx="12" cy="12" r="5"></circle>
                 <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -110,15 +110,15 @@ export default function NavBar(props) {
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="28"
-                height="28"
+                width="30"
+                height="30"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-moon"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-moon"
               >
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
               </svg>
