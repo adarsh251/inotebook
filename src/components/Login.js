@@ -43,7 +43,8 @@ function Login() {
       <style>
         {`
         .login-container {
-  display: flex;
+          display: flex;
+        background-color:white;
   flex-direction: row-reverse;
   height: 100vh;
 }
@@ -56,6 +57,8 @@ function Login() {
 }
 
 .login-image img {
+  margin-right:20px;
+  background-color:#ffffff;
   max-width: 100%;
   height: auto;
 }
@@ -65,38 +68,70 @@ function Login() {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
 }
 
 .login-form {
+  display:flex;
+  flex-direction:column;
   width: 80%;
   max-width: 400px;
   padding: 20px;
-  border: 1px solid #ccc;
   border-radius: 10px;
   background-color: white;
+  position:relative;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  height:3rem;
+  margin-top:1em;
+  margin-bottom:1em;
+  position:relative;
 }
 
 label {
-  display: block;
-  margin-bottom: 5px;
+  font-size: 1rem;
+  position:absolute;
+  margin-top:1rem;
+  margin-bottom:1rem;
+  padding-left:0.5rem;
+  padding-right:0.5rem;
+  height:1rem;
+  text-align: center;
   font-weight: bold;
+  transition: all 0.3s ease;
+  color:#541c7c;
 }
 
 input {
+  font-size: 1rem;
+  padding-left:1rem;
+  position:absolute;
   width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
+  height: 3rem;
+  background-color:transparent;
+  border:1px solid #541c7c;
+  border-radius:0.5em;
+  outline:none;
+}
+
+input:is(:focus,:valid){
+  border:1px solid #f4c41b;
+  box-shadow: 0 0 5px #f4c41b;
+}
+input:not([value=""]) + label,input:is(:focus,:valid) + label{
+  color:#f4b414;
+  transform: translate(0rem,-1.5rem) scale(0.9);
+  padding-left:0.3rem;
+  padding-right:0.3rem;
+  z-index: 1111;
+  background-color:#ffffff;
 }
 
 .submit-button {
   width: 100%;
   padding: 10px;
-  background-color: #4CAF50;
+  background-color: #f3c016;
   color: white;
   border: none;
   border-radius: 5px;
@@ -104,7 +139,7 @@ input {
 }
 
 .submit-button:hover {
-  background-color: #45a049;
+  background-color: #e6b102;
 }
 
 .signup-link {
@@ -130,12 +165,11 @@ input {
       </style>
       <div className="login-container">
       <div className="login-image">
-        <img src="https://st2.depositphotos.com/1001599/43046/v/450/depositphotos_430460192-stock-illustration-sign-page-abstract-concept-vector.jpg" alt="Login Illustration" />
+        <img src={process.env.PUBLIC_URL+'/white.png'} alt="Login Illustration" />
       </div>
       <div className="login-form-container">
         <form className="login-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
+          <div className="form-group">            
             <input
               type="email"
               id="email"
@@ -144,21 +178,23 @@ input {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
+            <label htmlFor="email">Email*</label>
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password:</label>
             <input
               type="password"
               id="password"
               name="password"
               value={password}
+              minLength="5"
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <label htmlFor="password">Password*</label>
           </div>
           <button type="submit" className="submit-button">Login</button>
           <div className="signup-link">
-            <Link to="/signup">New user? Signup here</Link>
+          Don't have an account? <Link to="/signup">Sign up</Link>
           </div>
         </form>
       </div>

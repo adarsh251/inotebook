@@ -11,26 +11,34 @@ import Notes from './components/Notes'
 import AddNote from './components/AddNote'
 import Login from './components/Login';
 import Signup from './components/Signup';
+import Home from './components/Home';
 function App() {
   const [theme,setTheme]=useState('light');
-  const [bgColor,setBgColor]=useState('#DEE4EA');
-  const [bgColor1,setBgColor1]=useState('#C7D1DB');
+  const [dark,setDark]=useState('#F6D83B');
+  const [mid,setMid]=useState('#FCF0C4');
+  const [light,setLight]=useState('#faf7eb');
   function changeTheme(){
     if(theme==='light'){
       setTheme('dark');
-      setBgColor('#101214');//70
-      setBgColor1('#161A1D');//30
-      document.body.style.backgroundColor="#161A1D";
+      setDark('#321852');
+      setMid('#541c84');
+      setLight('#8926b9');
+      document.body.style.backgroundColor="#541c84";
+      document.body.style.color="#FFFFFF";
     }
     else{
       setTheme('light');
-      setBgColor('#C7D1DB');//70
-      setBgColor1('#DEE4EA');//30
-      document.body.style.backgroundColor="#DEE4EA";
+      setDark('#F6D83B');
+      setMid('#FCF0C4');
+      setLight('#faf7eb');
+      document.body.style.backgroundColor="#FCF0C4";
+      document.body.style.color="#000000";
     }
   }
   useEffect(() => {
-    changeTheme();
+    document.body.style.backgroundColor="#FCF0C4";
+    document.body.style.color="#000000";
+    
     // eslint-disable-next-line
   }, []);
   const router = createBrowserRouter([
@@ -52,23 +60,31 @@ function App() {
       path:"/Home",
       element:
       <>
-        <NavBar style={{theme,bgColor,bgColor1}} changeTheme={changeTheme}/>
-        <AddNote/>
-        <Notes/>
+        <NavBar style={{theme,dark,mid,light}} changeTheme={changeTheme}/>
+        <Home style={{theme,dark,mid,light}} mode={theme}/>
       </>,
     },
     {
       path:"/new",
       element:
       <>
-        <NavBar style={{theme,bgColor,bgColor1}} changeTheme={changeTheme}/>
+        <NavBar style={{theme,dark,mid,light}} changeTheme={changeTheme}/>
+        <AddNote style={{theme,dark,mid,light}}/>
+      </>,
+    },
+    {
+      path:"/notes",
+      element:
+      <>
+        <NavBar style={{theme,dark,mid,light}} changeTheme={changeTheme}/>
+        <Notes style={{theme,dark,mid,light}}/>
       </>,
     },
     {
       path:"/About",    
       element:
       <>
-        <NavBar style={{theme,bgColor,bgColor1}} changeTheme={changeTheme}/>
+        <NavBar style={{theme,dark,mid,light}} changeTheme={changeTheme}/>
         <About/>
       </>,
     }
@@ -76,8 +92,7 @@ function App() {
   return (
     <>
     <NoteState>
-    
-    <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </NoteState>
     </>
   )

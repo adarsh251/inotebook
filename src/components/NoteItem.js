@@ -3,28 +3,26 @@ import noteContext from "../context/notes/noteContext";
 
 export default function NoteItem(props) {
   const {deleteNote}=useContext(noteContext);
-  const { note, handleClickEdit } = props;
+  const { style, note, handleClickEdit } = props;
   const handleClickDelete = () => {
     deleteNote(note._id);
   };
-  
-  
   return (
     <>
       <style>
         {`
         .note-card {
             
-            background-color: white;
+            background-color: ${style.light};
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 30%;
             padding: 20px;
             margin: 20px;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.3s ease;
         }
         .note-card:hover {
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 10px ${(style.theme==='light')?"rgba(0, 0, 0, 0.2)":"rgba(255, 255, 255, 0.2)"};
         }
         .note-card h2 {
             margin: 0;

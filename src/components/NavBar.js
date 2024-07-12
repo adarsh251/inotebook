@@ -5,19 +5,20 @@ export default function NavBar(props) {
     <>
       <style>
         {`
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
+        
         .navbar {
             display: flex;
+            width: 100%;
             justify-content: space-between;
             align-items: center;
-            background-color: ${props.style.bgColor};
+            background-color: ${props.style.dark};
             padding: 10px;
             position: sticky;
             top: 0;
             z-index: 1;
+        }
+        a{
+          color: ${(props.style.theme==='dark'?'#FFFFFF':'#000000')};
         }
         .navbar .project-title {
             font-size: 1.5em;
@@ -27,37 +28,21 @@ export default function NavBar(props) {
         .navbar a {            
             text-decoration: none;
             padding: 5px 8px;
-            transition: all 0.3s ease;
         }
         .nav-links a:hover {
             text-decoration: underline;
-            border-radius:  10px;
-            background-color: ${props.style.bgColor1};
-            box-shadow:inset 0px 0px 5px 3px ${props.style.bgColor};
-            padding: 10px 13px;
-            margin:5px;
+            
+            // transition: all 0.3s ease;
+            // border-radius:  10px;
+            // background-color: ${props.style.mid};
+            // box-shadow:inset 0px 0px 5px 3px ${props.style.dark};
+            // padding: 10px 13px;
+            // margin:5px;
         }
         .navbar .right {
             display: flex;
             align-items: center;
         }
-        .navbar input[type="text"] {
-            padding: 6px;
-            margin-right: 10px;
-            border: none;
-            border-radius: 4px;
-        }
-        .navbar input[type="submit"] {
-            padding: 6px 10px;
-            background-color: ${props.style.bgColor};
-            border: none;
-            outline: 0.05rem solid;
-            border-radius: 2px;
-            cursor: pointer;
-        }
-        .navbar input[type="submit"]:hover {
-          background-color: ${props.style.bgColor1};
-          }
         .mode{
             width:36px;
             height: 36px;
@@ -67,7 +52,8 @@ export default function NavBar(props) {
         }
         .mode svg{
             margin: 3px;
-            cursor: pointer
+            cursor: pointer;
+            user-select: none;
         }
     `}
       </style>
@@ -75,14 +61,13 @@ export default function NavBar(props) {
         <div className="project-title">
           <Link to="/">iNoteBook</Link>
         </div>
-        <div className="nav-links">
-          <Link to="/home">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/new">New</Link>
-        </div>
         <div className="right">
-          <input type="text" placeholder="Search..." />
-          <input type="submit" value="Submit" />
+          <div className="nav-links">
+            <Link to="/home">Home</Link>
+            <Link to="/new">Add Note</Link>
+            <Link to="/notes">My Notes</Link>
+            <Link to="/about">About</Link>
+          </div>
           <div className="mode" onClick={props.changeTheme}>
             {props.style.theme === "light" ? (
               <svg
