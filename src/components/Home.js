@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-
+import authContext from "../context/notes/authContext";
 export default function Home(props) {
   const {style}=props;
+  const {user}=useContext(authContext);
+  console.log(user);
   return (
     <>
       <style>
@@ -56,7 +58,7 @@ export default function Home(props) {
       <div className="user">
             <div className="welcome">
               <h1>
-                  Hi Adarsh!
+                  Hi {user.name.split(" ")[0].charAt(0).toUpperCase()+user.name.split(" ")[0].slice(1)}!
               </h1>
               <h3>
                   Hope you're good!

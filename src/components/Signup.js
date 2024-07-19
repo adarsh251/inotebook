@@ -12,6 +12,7 @@ function Signup() {
     console.log('Name:', name);
     console.log('Email:', email);
     console.log('Password:', password);
+    try{
     const response = await fetch('/user/register', {
       method: "POST",
       headers: {
@@ -26,6 +27,9 @@ function Signup() {
     });
     const json = await response.json();
     console.log(json);
+  }catch(err){
+    console.log(err);
+  }
     window.location.href = "/";
   };
 

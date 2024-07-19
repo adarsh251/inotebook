@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react'
 import NavBar from './components/NavBar'
 import "./App.css";
 import NoteState from './context/notes/noteState';
+import AuthState from './context/notes/authState';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -12,6 +13,7 @@ import AddNote from './components/AddNote'
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Home from './components/Home';
+import ProtectedRoutes from './utils/ProtectedRoutes';
 function App() {
   const [theme,setTheme]=useState('light');
   const [dark,setDark]=useState('#F6D83B');
@@ -38,7 +40,6 @@ function App() {
   useEffect(() => {
     document.body.style.backgroundColor="#FCF0C4";
     document.body.style.color="#000000";
-    
     // eslint-disable-next-line
   }, []);
   const router = createBrowserRouter([
@@ -57,44 +58,57 @@ function App() {
       </>,
     },
     {
-      path:"/Home",
-      element:
-      <>
-        <NavBar style={{theme,dark,mid,light}} changeTheme={changeTheme}/>
-        <Home style={{theme,dark,mid,light}} mode={theme}/>
-      </>,
-    },
-    {
-      path:"/new",
-      element:
-      <>
-        <NavBar style={{theme,dark,mid,light}} changeTheme={changeTheme}/>
-        <AddNote style={{theme,dark,mid,light}}/>
-      </>,
-    },
-    {
-      path:"/notes",
-      element:
-      <>
-        <NavBar style={{theme,dark,mid,light}} changeTheme={changeTheme}/>
-        <Notes style={{theme,dark,mid,light}}/>
-      </>,
-    },
-    {
       path:"/About",    
       element:
       <>
         <NavBar style={{theme,dark,mid,light}} changeTheme={changeTheme}/>
         <About/>
       </>,
-    }
+    },
+    {
+      path:"",
+      element:<ProtectedRoutes/>,
+      children:[
+        {
+          path:"/Home",
+          element:
+          <>
+            <NavBar style={{theme,dark,mid,light}} changeTheme={changeTheme}/>
+            <Home style={{theme,dark,mid,light}} mode={theme}/>
+          </>,
+        },
+        {
+          path:"/new",
+          element:
+          <>
+            <NavBar style={{theme,dark,mid,light}} changeTheme={changeTheme}/>
+            <AddNote style={{theme,dark,mid,light}}/>
+          </>,
+        },
+        {
+          path:"/notes",
+          element:
+          <>
+            <NavBar style={{theme,dark,mid,light}} changeTheme={changeTheme}/>
+            <Notes style={{theme,dark,mid,light}}/>
+          </>,
+        },
+      ]
+    },
+    {
+      path:"*",    
+      element:
+      <>
+        <h1>404</h1>
+      </>,
+    },
   ]);
   return (
-    <>
+    <AuthState>
     <NoteState>
       <RouterProvider router={router} />
     </NoteState>
-    </>
+    </AuthState>
   )
 }
 

@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useCallback, useContext } from "react";
 import { Link } from "react-router-dom";
+import authContext from "../context/notes/authContext";
 export default function NavBar(props) {
+  const {user}=useContext(authContext);
   return (
     <>
       <style>
@@ -59,7 +61,7 @@ export default function NavBar(props) {
       </style>
       <div className="navbar">
         <div className="project-title">
-          <Link to="/">iNoteBook</Link>
+          <Link to={user.name?"/home":"/"}>iNoteBook</Link>
         </div>
         <div className="right">
           <div className="nav-links">

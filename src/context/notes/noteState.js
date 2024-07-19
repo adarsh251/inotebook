@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import noteContext from "./noteContext";
+import authContext from "./authContext";
 const NoteState = (props) => {
+  
   // const s1={
   //     "name":"Adarsh",
   //     "class":"a1"
@@ -54,15 +56,20 @@ const NoteState = (props) => {
   //   }
   // ];
   const [notes, setNote] = useState([]);
+
+
+
+  const {user}=useContext(authContext);
   const getNote = async () => {
     try {
-      const token = localStorage.getItem("token");
-      console.log(token);
+      console.log(user.accessToken+"+"+user.name);
+      //const token = localStorage.getItem("token");
+      //console.log(token);
       const response = await fetch("/notes/all", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${user.accessToken}`,
         },
       });
       const json = await response.json();
@@ -74,6 +81,8 @@ const NoteState = (props) => {
     }
   };
 
+
+
   const addNote = async (title, description, tag) => {
     console.log("added");
     const note = {
@@ -82,13 +91,13 @@ const NoteState = (props) => {
       tag: `${tag}`,
     };
     try {
-      const token = localStorage.getItem("token");
-      console.log(token);
+      //const token = localStorage.getItem("token");
+      //console.log(token);
       const response = await fetch("/notes/new", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${user.accessToken}`,
         },
         body: JSON.stringify({
           title: `${title}`,
@@ -105,15 +114,17 @@ const NoteState = (props) => {
     }
     console.log(notes);
   };
+
+
   const updateNote = async (note) => {
     try {
-      const token = localStorage.getItem("token");
-      console.log(token);
+      //const token = localStorage.getItem("token");
+      //console.log(token);
       const response = await fetch(`/notes/update/${note._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${user.accessToken}`,
         },
         body: JSON.stringify({
           title: `${note.title}`,
@@ -134,13 +145,16 @@ const NoteState = (props) => {
     });
     setNote([...newNotes]);
   };
+
+
+
   const deleteNote = async (id) => {
-    const token = localStorage.getItem("token");
+    //const token = localStorage.getItem("token");
     try {
       const response = await fetch(`/notes/delete/${id}`, {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${user.accessToken}`,
         },
       });
       console.log(response);

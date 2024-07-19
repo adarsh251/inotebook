@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import noteContext from "../context/notes/noteContext";
-
+import { useNavigate } from "react-router-dom";
 export default function AddNote(props) {
+  const navigate=useNavigate();
   const { style } = props;
   const { addNote } = useContext(noteContext);
   const [note, setNote] = useState({ title: "", description: "", tag: "" });
   const handleSubmit = (e) => {
     e.preventDefault();
     addNote(note.title, note.description, note.tag);
+    navigate('/notes');
   };
   const handleChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
