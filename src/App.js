@@ -66,7 +66,6 @@ function App() {
       </>,
     },
     {
-      path:"",
       element:<ProtectedRoutes/>,
       children:[
         {

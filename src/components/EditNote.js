@@ -149,7 +149,7 @@ export default function EditNote(props) {
               value={note.description}
               onChange={handleChange}
               className="description-input"
-              minlength="5"
+              minLength="5"
               required
             ></textarea>
           </div>

@@ -3,10 +3,7 @@ import authContext from './authContext';
 
 const AuthState = (props) => {
     const [user,setUser]=useState({});
-    
-    const test=()=>{
-      console.log(user);
-    }
+
     const login=async(email,password)=>{
       //console.log(email+"+"+password);
       try {
@@ -20,6 +17,7 @@ const AuthState = (props) => {
             email: email,
             password: password,
           }),
+          credentials: 'include'
         });
         const json = await response.json();
         //console.log(json);
@@ -29,8 +27,7 @@ const AuthState = (props) => {
           //console.log(user);
           const name=json.name;
           return {name};
-          
-  
+            
         } else {
           // handle login error
           console.error("Login failed");
@@ -46,7 +43,6 @@ const AuthState = (props) => {
 
 
     }
-
     const verify=async()=>{
       try {
         const response = await fetch("/user/credentials", {
@@ -55,16 +51,42 @@ const AuthState = (props) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.accessToken}`,
           },
+          credentials: 'include'
         });
-        const json = await response.json();
-        return json;
+        let json=response.json();
+        //console.log(response);
+        if(response.status===401){
+          try{
+            console.log("refresh");
+            const r = await fetch("/user/refresh", {
+              method: "GET",
+              credentials: 'include'
+            });
+            console.log(r);
+            json =await r.json();
+            if (json.accessToken) {
+              //setUser(json);
+              console.log(json);
+              const name=json.foundUser.user;
+              const accessToken=json.accessToken;
+              setUser({name,accessToken});
+              return json.foundUser;
+            }
+            else return null;
+            console.log(json);
+          }
+          catch(err){
+            console.log(err);
+          }
+        }
+        else return json;
       } catch (err) {
         console.error(err);
       }
     }
   return (
     <authContext.Provider
-      value={{user,login,verify,test}}
+      value={{user,login,verify}}
     >
       {props.children}
     </authContext.Provider>

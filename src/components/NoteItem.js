@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import noteContext from "../context/notes/noteContext";
 
 export default function NoteItem(props) {
-  const {deleteNote}=useContext(noteContext);
+  const { deleteNote } = useContext(noteContext);
   const { style, note, handleClickEdit } = props;
   const handleClickDelete = () => {
     deleteNote(note._id);
@@ -22,11 +22,17 @@ export default function NoteItem(props) {
             transition: box-shadow 0.3s ease;
         }
         .note-card:hover {
-            box-shadow: 0 0 10px ${(style.theme==='light')?"rgba(0, 0, 0, 0.2)":"rgba(255, 255, 255, 0.2)"};
+            box-shadow: 0 0 10px ${
+              style.theme === "light"
+                ? "rgba(0, 0, 0, 0.2)"
+                : "rgba(255, 255, 255, 0.2)"
+            };
         }
         .note-card h2 {
             margin: 0;
             margin-bottom: 10px;
+            height: 1.2em;
+            overflow: hidden;
         }
         .note-preview {
             height: 80px; /* Adjust this to control the preview height */
@@ -43,13 +49,14 @@ export default function NoteItem(props) {
             height: 24px;
             margin-left: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            
         }
-        .note-card .icons svg.edit:hover {
-            fill: blue;
+        .note-card .icons svg.feather-trash-2:hover {
+            stroke: red;
         }
-        .note-card .icons svg.delete:hover {
-            fill: red;
+        .note-card .icons svg.feather-edit-3:hover {
+            stroke: blue;
         }
         `}
       </style>
@@ -58,34 +65,38 @@ export default function NoteItem(props) {
         <div className="note-preview">{note.description}</div>
         <div className="icons">
           <svg
-            className="edit"
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
+            width="24"
+            height="24"
             viewBox="0 0 24 24"
+            fill="none"
             stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="feather feather-edit-3"
             onClick={handleClickEdit}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M11 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-5m-8-5h.01M15 11h6m-6 4h6m-6 4h6M9 9l3-3m0 0l3 3m-3-3v12"
-            />
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
           </svg>
           <svg
-            className="delete"
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
+            width="24"
+            height="24"
             viewBox="0 0 24 24"
+            fill="none"
             stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="feather feather-trash-2"
             onClick={handleClickDelete}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M19 7l-.867 12.142A2 2 0 0116.14 21H7.86a2 2 0 01-1.993-1.858L5 7m5-3h4a1 1 0 011 1v1H9V5a1 1 0 011-1z"
-            />
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <line x1="10" y1="11" x2="10" y2="17"></line>
+            <line x1="14" y1="11" x2="14" y2="17"></line>
           </svg>
         </div>
       </div>
