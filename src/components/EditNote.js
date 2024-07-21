@@ -14,6 +14,7 @@ export default function EditNote(props) {
       description: noteContent.description,
       tag: noteContent.tag,
     });
+    // eslint-disable-next-line
   }, []);
   const handleSubmit=async(e)=>{
     e.preventDefault();

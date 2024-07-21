@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import noteContext from "./noteContext";
 import authContext from "../user/authContext";
+const url=process.env.REACT_APP_BASE_URL;
 const NoteState = (props) => {
   const [notes, setNote] = useState([]);
 
@@ -11,7 +12,7 @@ const NoteState = (props) => {
       //console.log(user.accessToken+"+"+user.name);
       //const token = localStorage.getItem("token");
       //console.log(token);
-      const response = await fetch("/notes/all", {
+      const response = await fetch(`${url}/notes/all`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -39,7 +40,7 @@ const NoteState = (props) => {
     try {
       //const token = localStorage.getItem("token");
       //console.log(token);
-      const response = await fetch("/notes/new", {
+      const response = await fetch(`${url}/notes/new`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +67,7 @@ const NoteState = (props) => {
     try {
       //const token = localStorage.getItem("token");
       //console.log(token);
-      await fetch(`/notes/update/${note._id}`, {
+      await fetch(`${url}/notes/update/${note._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +98,7 @@ const NoteState = (props) => {
   const deleteNote = async (id) => {
     //const token = localStorage.getItem("token");
     try {
-      await fetch(`/notes/delete/${id}`, {
+      await fetch(`${url}/notes/delete/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${user.accessToken}`,

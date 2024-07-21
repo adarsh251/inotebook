@@ -13,7 +13,7 @@ function Signup() {
     console.log('Email:', email);
     console.log('Password:', password);
     try{
-    const response = await fetch('/user/register', {
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/user/register`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',

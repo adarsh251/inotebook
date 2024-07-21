@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import authContext from './authContext';
-
+const url=process.env.REACT_APP_BASE_URL;
 const AuthState = (props) => {
     const [user,setUser]=useState({});
-
+    console.log(url);
     const login=async(email,password)=>{
       //console.log(email+"+"+password);
       try {
-        const response = await fetch("/user/login", {
+        const response = await fetch(`${url}/user/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -44,8 +44,9 @@ const AuthState = (props) => {
 
     }
     const verify=async()=>{
+      console.log("called");
       try {
-        const response = await fetch("/user/credentials", {
+        const response = await fetch(`${url}/user/credentials`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -58,7 +59,7 @@ const AuthState = (props) => {
         if(response.status===401){
           try{
             console.log("refresh");
-            const r = await fetch("/user/refresh", {
+            const r = await fetch(`${url}/user/refresh`, {
               method: "GET",
               credentials: 'include'
             });
@@ -85,7 +86,7 @@ const AuthState = (props) => {
     }
     const logout=async()=>{
       try{
-        await fetch('/user/logout',{
+        await fetch(`${url}/user/logout`,{
           method: "POST",
           credentials: 'include'
         });
