@@ -1,18 +1,29 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import noteContext from "../context/notes/noteContext";
 
 export default function NoteItem(props) {
   const { deleteNote } = useContext(noteContext);
   const { style, note, handleClickEdit } = props;
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClickDelete = () => {
     deleteNote(note._id);
   };
+
+  const handleClickView = () => {
+    document.body.style.overflow = "hidden";
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    document.body.style.overflow = "scroll";
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <style>
         {`
         .note-card {
-            
             background-color: ${style.light};
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -50,7 +61,6 @@ export default function NoteItem(props) {
             margin-left: 10px;
             cursor: pointer;
             transition: all 0.2s ease;
-            
         }
         .note-card .icons svg.feather-trash-2:hover {
             stroke: red;
@@ -58,11 +68,46 @@ export default function NoteItem(props) {
         .note-card .icons svg.feather-edit-3:hover {
             stroke: blue;
         }
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: ${style.light};
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            width: 60%;
+            height: 80%;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            text-align:center;
+        }
+        .modal p{
+          border: 3px solid ${style.dark};
+          padding:10px;
+            overflow-y:scroll;
+            text-align:justify;
+        }
+        .modal footer{
+            margin:10px;
+            text-align:left;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
         `}
       </style>
       <div className="note-card">
         <h2>{note.title}</h2>
-        <div className="note-preview">{note.description}</div>
+        <div className="note-preview" onClick={handleClickView}>{note.description}</div>
         <div className="icons">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -100,6 +145,16 @@ export default function NoteItem(props) {
           </svg>
         </div>
       </div>
+      {isModalOpen && (
+        <>
+          <div className="modal-overlay" onClick={handleCloseModal}></div>
+          <div className="modal">
+            <h1>{note.title}</h1>
+            <p>{note.description}</p>
+            <footer>{note.tag}</footer>
+          </div>
+        </>
+      )}
     </>
   );
 }

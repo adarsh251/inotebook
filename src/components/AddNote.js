@@ -19,7 +19,7 @@ export default function AddNote(props) {
     textarea.addEventListener("keyup", (event) => {
       textarea.style.height = "32px";
       let scHeight = event.target.scrollHeight + 4;
-      console.log(scHeight);
+      //console.log(scHeight);
       textarea.style.height = `${scHeight}px`;
     });
   }, []);

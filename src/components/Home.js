@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import authContext from "../context/notes/authContext";
+import authContext from "../context/user/authContext";
 export default function Home(props) {
   const {style}=props;
   const {user}=useContext(authContext);
-  console.log(user);
+  //console.log(user);
   return (
     <>
       <style>

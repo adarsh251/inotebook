@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import authContext from '../context/user/authContext';
 import { Outlet, Navigate, useLocation } from 'react-router-dom';
-const ProtectedRoutes =() => {
+const LoginRoute =() => {
     const {verify}=useContext(authContext);
     const [isAuthenticated, setIsAuthenticated] = useState(null);
     const location=useLocation();
@@ -19,8 +19,8 @@ const ProtectedRoutes =() => {
   }
   else{
     //console.log(isAuthenticated);
-    return isAuthenticated?.user ? <Outlet /> : <Navigate to="/" />;
+    return isAuthenticated?.user ? <Navigate to="/home" />:<Outlet />;
   }
 }
 
-export default ProtectedRoutes
+export default LoginRoute

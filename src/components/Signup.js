@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Signup() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const navigate=useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle the signup logic here
@@ -26,11 +26,16 @@ function Signup() {
       })
     });
     const json = await response.json();
+    if(response.status===201){
+      navigate("/");
+    }else{
+      window.alert(json.msg);
+    }
     console.log(json);
   }catch(err){
     console.log(err);
   }
-    window.location.href = "/";
+    //window.location.href = "/";
   };
 
   return (

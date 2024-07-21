@@ -14,7 +14,7 @@ export default function EditNote(props) {
       description: noteContent.description,
       tag: noteContent.tag,
     });
-  }, [noteContent]);
+  }, []);
   const handleSubmit=async(e)=>{
     e.preventDefault();
     await updateNote(note);
@@ -23,15 +23,6 @@ export default function EditNote(props) {
   const handleChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
   };
-  useEffect(() => {
-    const textarea = document.querySelector("textarea");
-    textarea.addEventListener("keyup", (event) => {
-      textarea.style.height = "32px";
-      let scHeight = event.target.scrollHeight + 4;
-      console.log(scHeight);
-      textarea.style.height = `${scHeight}px`;
-    });
-  }, []);
   return (
     <>
       <style>
@@ -55,12 +46,12 @@ export default function EditNote(props) {
         label {
         width: 150px;
         margin-right: 10px;
-        text-align: right;
+        text-align: start;
         }
 
-        input.title-input {
+        input.title-input, textarea.tag-input {
         flex: 1;
-          height: 2em;
+          height: 2em;  
           padding: 5px;
           font-size: 1em;
           resize: none;
@@ -74,10 +65,13 @@ export default function EditNote(props) {
         input.title-input:is(:focus, :valid, :hover){
           box-shadow: 0 0 5px ${style.dark};
         }
-
-        textarea.description-input, textarea.tag-input {
+        textarea.tag-input{
+        height: 8vh;
+        }
+        textarea.description-input {
           flex: 1;
-          height: 2em;
+          overflow:auto;
+          height: 40vh;
           padding: 5px;
           font-size: 1em;
           resize: none;
@@ -99,14 +93,10 @@ export default function EditNote(props) {
           padding: 4px;
         }
 
-        textarea::-webkit-scrollbar{
-          width:0px;
-        }
-
         .submit-button {
         border: none;
         border-radius: 0.3em;
-          margin-top: 20px;
+          margin-top: 10px;
           padding: 10px 20px;
           font-size: 1em;
           cursor: pointer;
@@ -121,9 +111,6 @@ export default function EditNote(props) {
           box-shadow: 0 0 15px ${style.dark};
           text-decoration:underline;
         }
-          label{
-          text-align: start;
-          }
       `}
       </style>
       <div>

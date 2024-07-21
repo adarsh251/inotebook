@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import authContext from "../context/notes/authContext";
+import authContext from "../context/user/authContext";
 import { useNavigate } from 'react-router-dom';
 function Login() {
   const navigate=useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const {login}=useContext(authContext);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     //console.log("Email:", email);

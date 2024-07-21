@@ -1,8 +1,18 @@
-import React, { useCallback, useContext } from "react";
-import { Link } from "react-router-dom";
-import authContext from "../context/notes/authContext";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import authContext from "../context/user/authContext";
 export default function NavBar(props) {
-  const {user}=useContext(authContext);
+  const {logout}=useContext(authContext);
+  const navigate=useNavigate();
+  const handleLogout =async () => {
+    // Clear the auth-token cookie
+    console.log("called");
+    // console.log(document.cookie);
+    // document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    await logout();
+    // // Navigate to the home page
+    navigate("/");
+  };
   return (
     <>
       <style>
@@ -61,14 +71,14 @@ export default function NavBar(props) {
       </style>
       <div className="navbar">
         <div className="project-title">
-          <Link to={user.name?"/home":"/"}>iNoteBook</Link>
+          <Link to="/home">iNoteBook</Link>
         </div>
         <div className="right">
           <div className="nav-links">
             <Link to="/home">Home</Link>
             <Link to="/new">Add Note</Link>
             <Link to="/notes">My Notes</Link>
-            <Link to="/about">About</Link>
+            <Link onClick={handleLogout}>Logout</Link>
           </div>
           <div className="mode" onClick={props.changeTheme}>
             {props.style.theme === "light" ? (

@@ -2,18 +2,19 @@ import React, { useState,useEffect } from 'react'
 import NavBar from './components/NavBar'
 import "./App.css";
 import NoteState from './context/notes/noteState';
-import AuthState from './context/notes/authState';
+import AuthState from './context/user/authState';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import About from './components/About';
 import Notes from './components/Notes'
 import AddNote from './components/AddNote'
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Home from './components/Home';
 import ProtectedRoutes from './utils/ProtectedRoutes';
+import Four04 from './components/404';
+import LoginRoute from './utils/LoginRoute';
 function App() {
   const [theme,setTheme]=useState('light');
   const [dark,setDark]=useState('#F6D83B');
@@ -46,23 +47,20 @@ function App() {
     {
       path: "/",
       
-      element:<>
-      <Login />
-      </>,
+      element:<LoginRoute/>,
+      children:[
+        
+        {
+          path:"/",
+          element:<Login/>
+        },
+      ]
     },
     {
       path: "/signup",
       
       element:<>
       <Signup />
-      </>,
-    },
-    {
-      path:"/About",    
-      element:
-      <>
-        <NavBar style={{theme,dark,mid,light}} changeTheme={changeTheme}/>
-        <About/>
       </>,
     },
     {
@@ -98,8 +96,8 @@ function App() {
       path:"*",    
       element:
       <>
-        <h1>404</h1>
-      </>,
+        <Four04/>
+      </>
     },
   ]);
   return (

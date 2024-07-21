@@ -6,8 +6,7 @@ import EditNote from "./EditNote";
 export default function Notes(props) {
   const { style } = props;
   const { notes, getNote } = useContext(noteContext);
-  const [mode, setMode] = useState("none");
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [noteContent, setNoteContent] = useState({
     _id: ``,
     title: ``,
@@ -15,18 +14,18 @@ export default function Notes(props) {
     tag: ``,
   });
   const handleClickClose = () => {
-    setMode("none");
+    //setMode("none");
     document.body.style.overflow = "auto";
+    setIsModalOpen(false);
   };
   const handleClickEdit = (note) => {
     setNoteContent(note);
-    setScrollPosition(window.scrollY);
-    setMode("flex");
+    //setMode("flex");
     document.body.style.overflow = "hidden";
+    setIsModalOpen(true);
   };
   useEffect(() => {
     getNote();
-    console.log(notes);
     // eslint-disable-next-line
   }, []);
   return (
@@ -39,29 +38,29 @@ export default function Notes(props) {
             justify-content: space-evenly;
           }
         .EditNote{
-            background-color:rgba(0,0,0,0.5);
-            height:100%;
-            width:100%;
-            position: absolute;
-            display:${mode};
-            justify-content: center;  
-            align-items:center;
-            top:${scrollPosition}px;;
-          left:0;
-          z-index:2;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
           }
         .EditPanel{
-          height: 70%;
-          width: 70%;
-          overflow:auto;
-          background-color: ${style.mid};
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        
+          position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: ${style.mid};
             padding: 20px;
-            margin: 20px;
-            transition: all 0.3s ease;
-            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            width: 60%;
+            height: 80%;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            text-align:center;
         }
         .EditPanel .close{
            position: absolute; /* Changed to absolute positioning */
@@ -75,33 +74,19 @@ export default function Notes(props) {
         }
         `}
       </style>
-      <div className="EditNote">
+      {isModalOpen && (
+        <>
+      <div className="EditNote" onClick={handleClickClose}></div>
         <div className="EditPanel">
-          <button className="close" onClick={handleClickClose}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="40"
-              height="40"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="feather feather-x-circle"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="15" y1="9" x2="9" y2="15"></line>
-              <line x1="9" y1="9" x2="15" y2="15"></line>
-            </svg>
-          </button>
           <EditNote
             style={props.style}
             noteContent={noteContent}
             handleClickClose={handleClickClose}
           />
         </div>
-      </div>
+      
+      </>
+      )}
       <div className="Notes">
         {notes.map((note) => {
           return (

@@ -62,18 +62,17 @@ const AuthState = (props) => {
               method: "GET",
               credentials: 'include'
             });
-            console.log(r);
+            //console.log(r);
             json =await r.json();
             if (json.accessToken) {
               //setUser(json);
-              console.log(json);
+              //console.log(json);
               const name=json.foundUser.user;
               const accessToken=json.accessToken;
               setUser({name,accessToken});
               return json.foundUser;
             }
             else return null;
-            console.log(json);
           }
           catch(err){
             console.log(err);
@@ -84,9 +83,20 @@ const AuthState = (props) => {
         console.error(err);
       }
     }
+    const logout=async()=>{
+      try{
+        await fetch('/user/logout',{
+          method: "POST",
+          credentials: 'include'
+        });
+        setUser({});
+      } catch (err) {
+        console.error(err);
+      }
+    }
   return (
     <authContext.Provider
-      value={{user,login,verify}}
+      value={{user,login,verify,logout}}
     >
       {props.children}
     </authContext.Provider>
